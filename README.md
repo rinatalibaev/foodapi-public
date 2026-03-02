@@ -42,4 +42,6 @@ Backend-сервис для работы с рецептами, ингредие
 
 2. Настроить keycloak - http://localhost:8282 (создать реалм, скоуп, клиента, пользователя, мапперы)
 
-3. Minio - http://localhost:9001 -> создать бакет food-bucket
+3. Указать правильные KEYCLOAK_ADMIN_CLIENT_ID и KEYCLOAK_CREDENTIALS_SECRET в [docker-compose.yml](docker-compose.yml)
+
+4. Minio - http://localhost:9001 -> создать бакет food-bucket
