@@ -32,11 +32,11 @@ Backend-сервис для работы с рецептами, ингредие
 ---
 
 ## Запуск
-1. Собрать проект любым возможным способом выполнив ./gradlew clean build
-В консоли выполнить команду docker build -t food-app --no-cache .
+1. В консоли выполнить команды:
+./gradlew clean build 
+docker build -t food-app --no-cache .
+docker compose up --build --force-recreate --no-deps -d
 
-2. docker compose up --build --force-recreate --no-deps -d
+2. Настроить keycloak - http://localhost:8282 (создать реалм, скоуп, клиента, пользователя, мапперы)
 
-3. Настроить keycloak - http://localhost:8282 (создать реалм, скоуп, клиента, пользователя, мапперы)
-
-4. Minio - http://localhost:9001 -> создать бакет food-bucket
+3. Minio - http://localhost:9001 -> создать бакет food-bucket
