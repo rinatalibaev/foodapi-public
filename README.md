@@ -33,9 +33,12 @@ Backend-сервис для работы с рецептами, ингредие
 
 ## Запуск
 1. В консоли выполнить команды:
-./gradlew clean build 
-docker build -t food-app --no-cache .
-docker compose up --build --force-recreate --no-deps -d
+
+`./gradlew clean build`
+
+`docker build -t food-app --no-cache .`
+
+`docker compose up --build --force-recreate --no-deps -d`
 
 2. Настроить keycloak - http://localhost:8282 (создать реалм, скоуп, клиента, пользователя, мапперы)
 
