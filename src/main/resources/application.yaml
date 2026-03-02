@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: foodapi
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_CERTS:http://localhost:8282/realms/food-realm/protocol/openid-connect/certs}
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/fooddb}
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  liquibase:
+    enabled: true
+    change-log: classpath:changelog.xml
+    parameters:
+      schema: public
+    default-schema: ${spring.liquibase.parameters.schema}
+  servlet:
+    multipart:
+      max-file-size: 100MB
+s3:
+  access-key: ${S3_ACCESS_KEY}
+  secret-key: ${S3_SECRET_KEY}
+  region: ${S3_REGION}
+  bucket: ${S3_BUCKET}
+  base-url: ${S3_BASE_URL}
+
+keycloak:
+  realm: food-realm
+  auth-server-url: ${AUTH_SERVER_URL:http://localhost:8282}
+  resource: ${KEYCLOAK_ADMIN_CLIENT_ID}
+  public-client: false
+  credentials:
+    secret: ${KEYCLOAK_CREDENTIALS_SECRET}
+  bearer-only: false
+  admin-client-id: ${KEYCLOAK_ADMIN_CLIENT_ID}
+
+logging:
+  level:
+    liquibase: DEBUG

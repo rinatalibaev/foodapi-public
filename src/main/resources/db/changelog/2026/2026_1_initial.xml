@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.22.xsd">
+
+    <!-- ================== IMAGE ================== -->
+    <changeSet id="001-create-image" author="RA">
+        <createTable tableName="image">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="link" type="VARCHAR(1024)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMPTZ"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ================== USER ================== -->
+    <changeSet id="002-create-user" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="app_user"/>
+            </not>
+        </preConditions>
+        <createTable tableName="app_user">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="login" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="avatar_image_id" type="BIGINT"/>
+            <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMPTZ"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="app_user"
+                                 baseColumnNames="avatar_image_id"
+                                 referencedTableName="image"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_user_avatar"/>
+    </changeSet>
+
+    <!-- ================== MEASURE UNIT ================== -->
+    <changeSet id="003-create-measure-unit" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="measure_unit"/>
+            </not>
+        </preConditions>
+        <createTable tableName="measure_unit">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID" />
+            <column name="one" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="few" type="VARCHAR(50)" />
+            <column name="many" type="VARCHAR(50)" />
+            <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMPTZ"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ================== INGREDIENT ================== -->
+    <changeSet id="004-create-ingredient" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="ingredient"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ingredient">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="uuid" type="UUID"/>
+            <column name="name" type="VARCHAR(255)" />
+            <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMPTZ"/>
+        </createTable>
+
+    </changeSet>
+
+    <!-- ================== INGREDIENT_MEASURE_UNIT ================== -->
+    <changeSet id="005-create-ingredient-measure-unit" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="ingredient_measure_unit"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ingredient_measure_unit">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="ingredient_id" type="BIGINT" />
+            <column name="measure_unit_id" type="BIGINT" />
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="ingredient_measure_unit"
+                                 baseColumnNames="ingredient_id"
+                                 referencedTableName="ingredient"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_im_ingredient"/>
+
+        <addForeignKeyConstraint baseTableName="ingredient_measure_unit"
+                                 baseColumnNames="measure_unit_id"
+                                 referencedTableName="measure_unit"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_im_measure_unit"/>
+    </changeSet>
+
+    <!-- ================== RECIPE ================== -->
+    <changeSet id="006-create-recipe" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="recipe"/>
+            </not>
+        </preConditions>
+        <createTable tableName="recipe">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)" />
+            <column name="duration" type="INTEGER"/>
+            <column name="author_id" type="BIGINT"/>
+            <column name="image_id" type="BIGINT"/>
+            <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMPTZ"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="recipe"
+                                 baseColumnNames="author_id"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_recipe_author"/>
+        <addForeignKeyConstraint baseTableName="recipe"
+                                 baseColumnNames="image_id"
+                                 referencedTableName="image"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_recipe_image"/>
+    </changeSet>
+
+    <!-- ================== STEP ================== -->
+    <changeSet id="007-create-step" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="step"/>
+            </not>
+        </preConditions>
+        <createTable tableName="step">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints unique="true"/>
+            </column>
+            <column name="recipe_id" type="BIGINT"/>
+            <column name="step_order" type="INTEGER"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="duration" type="INTEGER"/>
+            <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMPTZ"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="step"
+                                 baseColumnNames="recipe_id"
+                                 referencedTableName="recipe"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_step_recipe"/>
+    </changeSet>
+
+    <!-- ================== RECIPE_INGREDIENT ================== -->
+    <changeSet id="008-create-recipe-ingredient" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="recipe_ingredient"/>
+            </not>
+        </preConditions>
+        <createTable tableName="recipe_ingredient">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="recipe_id" type="BIGINT"/>
+            <column name="ingredient_id" type="BIGINT"/>
+            <column name="count" type="NUMERIC"/>
+            <column name="measure_unit_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="recipe_ingredient"
+                                 baseColumnNames="recipe_id"
+                                 referencedTableName="recipe"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_ri_recipe"/>
+        <addForeignKeyConstraint baseTableName="recipe_ingredient"
+                                 baseColumnNames="ingredient_id"
+                                 referencedTableName="ingredient"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_ri_ingredient"/>
+        <addForeignKeyConstraint baseTableName="recipe_ingredient"
+                                 baseColumnNames="measure_unit_id"
+                                 referencedTableName="measure_unit"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_ri_measure_unit"/>
+    </changeSet>
+
+    <!-- ================== FAVORITE ================== -->
+    <changeSet id="009-create-favorite" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="favorite"/>
+            </not>
+        </preConditions>
+        <createTable tableName="favorite">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="recipe_id" type="BIGINT"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="favorite"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_fav_user"/>
+        <addForeignKeyConstraint baseTableName="favorite"
+                                 baseColumnNames="recipe_id"
+                                 referencedTableName="recipe"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_fav_recipe"/>
+    </changeSet>
+
+    <!-- ================== FREEZER ================== -->
+    <changeSet id="010-create-freezer" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="freezer"/>
+            </not>
+        </preConditions>
+        <createTable tableName="freezer">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="ingredient_id" type="BIGINT"/>
+            <column name="count" type="NUMERIC"/>
+            <column name="measure_unit_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="freezer"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_freezer_user"/>
+        <addForeignKeyConstraint baseTableName="freezer"
+                                 baseColumnNames="ingredient_id"
+                                 referencedTableName="ingredient"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_freezer_ingredient"/>
+    </changeSet>
+
+    <!-- ================== COMMENT ================== -->
+    <changeSet id="011-create-comment" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="comment"/>
+            </not>
+        </preConditions>
+        <createTable tableName="comment">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="uuid" type="UUID">
+                <constraints unique="true"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="recipe_id" type="BIGINT"/>
+            <column name="image_id" type="BIGINT"/>
+            <column name="text" type="TEXT"/>
+            <column name="created_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMPTZ" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="deleted_at" type="TIMESTAMPTZ"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="comment"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_comment_user"/>
+        <addForeignKeyConstraint baseTableName="comment"
+                                 baseColumnNames="recipe_id"
+                                 referencedTableName="recipe"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_comment_recipe"/>
+        <addForeignKeyConstraint baseTableName="comment"
+                                 baseColumnNames="image_id"
+                                 referencedTableName="image"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_comment_image"/>
+    </changeSet>
+
+    <changeSet id="010-create-prepared" author="RA">
+        <preConditions>
+            <not>
+                <tableExists tableName="prepared"/>
+            </not>
+        </preConditions>
+        <createTable tableName="prepared">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="BIGINT"/>
+            <column name="recipe_id" type="BIGINT"/>
+            <column name="prepared_count" type="INTEGER"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="prepared"
+                                 baseColumnNames="user_id"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_prep_user"/>
+        <addForeignKeyConstraint baseTableName="prepared"
+                                 baseColumnNames="recipe_id"
+                                 referencedTableName="recipe"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_prep_recipe"/>
+    </changeSet>
+
+</databaseChangeLog>

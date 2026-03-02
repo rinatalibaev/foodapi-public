@@ -1,0 +1,110 @@
+services:
+  food-app:
+    image: food-app:latest
+    container_name: food-app
+    environment:
+      AUTH_SERVER_URL: http://keycloak-food:8080
+      KEYCLOAK_ADMIN_CLIENT_ID: admin-cli
+      KEYCLOAK_CREDENTIALS_SECRET: rRfuMkNElfPGMj2NC86fwGfHCAGftWMw
+      KEYCLOAK_CERTS: http://keycloak-food:8080/realms/food-realm/protocol/openid-connect/certs
+      SPRING_DATASOURCE_URL: jdbc:postgresql://food-postgres:5432/fooddb
+      S3_ACCESS_KEY: access_key
+      S3_SECRET_KEY: secret_key
+      S3_BASE_URL: http://minio-food:9000
+      S3_BUCKET: food-bucket
+      S3_REGION: ru-moscow-1
+    networks:
+      - default
+    expose:
+      - "8094"
+    ports:
+      - "8094:8080"
+      - "5005:5005"
+    depends_on:
+      - food-postgres
+
+  minio-food:
+    image: minio/minio:latest
+    container_name: minio-food
+    networks:
+      - default
+    environment:
+      MINIO_ROOT_USER: access_key
+      MINIO_ROOT_PASSWORD: secret_key
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+
+  food-postgres:
+    image: library/postgres:14
+    container_name: food-postgres
+    networks:
+      - default
+    restart: on-failure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fooddb
+      POSTGRES_PORT: 5432
+    healthcheck:
+      test: pg_isready -d postgres
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    ports:
+      - "5432:5432"
+
+  keycloak-food:
+    image: quay.io/keycloak/keycloak:20.0.2
+    hostname: keycloak-food
+    container_name: keycloak-food
+    networks:
+      - default
+    command:
+      - start --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
+    environment:
+      KC_DB_URL: jdbc:postgresql://keycloak-food-postgres:5432/postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: postgres
+      KC_DB_SCHEMA: public
+      KC_FEATURES: preview
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - type: bind
+        source: ./keycloak/import/foo-realm.json
+        target: /opt/keycloak/data/import/foo-realm.json
+        read_only: true
+    ports:
+      - "8282:8080"
+    depends_on:
+      keycloak-food-postgres:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
+      start_period: 10s
+      interval: 30s
+      retries: 3
+      timeout: 5s
+
+  keycloak-food-postgres:
+    image: library/postgres:14
+    container_name: keycloak-food-postgres
+    networks:
+      - default
+    restart: on-failure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PORT: 5496
+    healthcheck:
+      test: pg_isready -d postgres
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    ports:
+      - "5496:5432"

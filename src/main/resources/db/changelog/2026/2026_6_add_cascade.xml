@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.22.xsd">
+
+    <changeSet id="add_cascade_step" author="RA">
+        <preConditions>
+            <tableExists tableName="step"/>
+        </preConditions>
+        <sql>
+            ALTER TABLE step
+            DROP
+            CONSTRAINT fk_step_recipe,
+            ADD CONSTRAINT fk_step_recipe
+            FOREIGN KEY (recipe_id)
+            REFERENCES recipe(id)
+            ON DELETE
+            CASCADE;
+        </sql>
+    </changeSet>
+    <changeSet id="add_cascade_ri" author="RA">
+        <preConditions>
+            <tableExists tableName="recipe_ingredient"/>
+        </preConditions>
+        <sql>
+            ALTER TABLE recipe_ingredient
+            DROP
+            CONSTRAINT fk_ri_recipe,
+            ADD CONSTRAINT fk_ri_recipe
+            FOREIGN KEY (recipe_id)
+            REFERENCES recipe(id)
+            ON DELETE
+            CASCADE;
+        </sql>
+    </changeSet>
+    <changeSet id="add_cascade_comment" author="RA">
+        <preConditions>
+            <tableExists tableName="comment"/>
+        </preConditions>
+        <sql>
+            ALTER TABLE comment
+            DROP
+            CONSTRAINT fk_comment_recipe,
+            ADD CONSTRAINT fk_comment_recipe
+            FOREIGN KEY (recipe_id)
+            REFERENCES recipe(id)
+            ON DELETE
+            CASCADE;
+        </sql>
+    </changeSet>
+    <changeSet id="add_cascade_favorite" author="RA">
+        <preConditions>
+            <tableExists tableName="favorite"/>
+        </preConditions>
+        <sql>
+            ALTER TABLE favorite
+            DROP
+            CONSTRAINT fk_fav_recipe,
+            ADD CONSTRAINT fk_fav_recipe
+            FOREIGN KEY (recipe_id)
+            REFERENCES recipe(id)
+            ON DELETE
+            CASCADE;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

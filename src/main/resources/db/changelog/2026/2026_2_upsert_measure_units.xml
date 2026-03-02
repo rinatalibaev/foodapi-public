@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.22.xsd">
+
+    <changeSet id="012-fill-measure-unit" author="RA">
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="грамм"/>
+            <column name="few" value="грамма"/>
+            <column name="many" value="граммов"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="килограмм"/>
+            <column name="few" value="килограмма"/>
+            <column name="many" value="килограммов"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="миллилитр"/>
+            <column name="few" value="миллилитра"/>
+            <column name="many" value="миллилитров"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="литр"/>
+            <column name="few" value="литра"/>
+            <column name="many" value="литров"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="штука"/>
+            <column name="few" value="штуки"/>
+            <column name="many" value="штук"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="столовая ложка"/>
+            <column name="few" value="столовые ложки"/>
+            <column name="many" value="столовых ложек"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="чайная ложка"/>
+            <column name="few" value="чайные ложки"/>
+            <column name="many" value="чайных ложек"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="стакан"/>
+            <column name="few" value="стакана"/>
+            <column name="many" value="стаканов"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="щепотка"/>
+            <column name="few" value="щепотки"/>
+            <column name="many" value="щепоток"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="зубчик"/>
+            <column name="few" value="зубчика"/>
+            <column name="many" value="зубчиков"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="ломтик"/>
+            <column name="few" value="ломтика"/>
+            <column name="many" value="ломтиков"/>
+        </insert>
+
+        <insert tableName="measure_unit">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="one" value="пучок"/>
+            <column name="few" value="пучка"/>
+            <column name="many" value="пучков"/>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

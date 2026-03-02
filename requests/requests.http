@@ -1,0 +1,23 @@
+POST http://localhost:8282/realms/food-realm/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=admin-client&client_secret=1ZXgLPv0yys2TqwMS1J8lwX1ML69pikS&grant_type=password&scope=openid&username=admin&password=admin
+
+### food-mobile
+POST http://localhost:8282/realms/food-realm/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=food-mobile&client_secret=f7qw9rY5skQCBCJnyp25aKU6NNnRtIe2&grant_type=password&username=vika&password=vvvv_vvvv
+
+### food-backend
+POST http://localhost:8282/realms/food-realm/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=food-backend&client_secret=weDfL90xIDjqiwxCJScZ1ZPpyALLAR2P&grant_type=password&username=vika&password=vvvv_vvvv
+
+### food-admin
+POST http://localhost:8282/realms/food-realm/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=food-admin&client_secret=tQuMpCO41gSZTTaiNC98VK31H8vzqoEv&grant_type=client_credentials
+

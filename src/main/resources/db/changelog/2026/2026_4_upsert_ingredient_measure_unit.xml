@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.22.xsd">
+
+    <changeSet id="014-fill-ingredient-measure-unit" author="RA">
+
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="ingredient_measure_unit"/>
+        </preConditions>
+
+        <!-- ===== Сыпучие и твёрдые ингредиенты ===== -->
+        <sql>
+            INSERT INTO ingredient_measure_unit (ingredient_id, measure_unit_id)
+            SELECT i.id, mu.id
+            FROM ingredient i
+                     JOIN measure_unit mu ON mu.one IN (
+                                                        'грамм', 'килограмм', 'столовая ложка', 'чайная ложка'
+                )
+            WHERE i.name IN (
+                             'Мука пшеничная', 'Рис', 'Гречка', 'Пшено',
+                             'Соль', 'Чёрный перец', 'Паприка', 'Хмели-сунели'
+                );
+        </sql>
+
+        <!-- ===== Жидкости ===== -->
+        <sql>
+            INSERT INTO ingredient_measure_unit (ingredient_id, measure_unit_id)
+            SELECT i.id, mu.id
+            FROM ingredient i
+                     JOIN measure_unit mu ON mu.one IN (
+                                                        'миллилитр', 'литр', 'стакан', 'столовая ложка', 'чайная ложка'
+                )
+            WHERE i.name IN (
+                             'Вода', 'Молоко', 'Сметана', 'Растительное масло'
+                );
+        </sql>
+
+        <!-- ===== Мясо и рыба ===== -->
+        <sql>
+            INSERT INTO ingredient_measure_unit (ingredient_id, measure_unit_id)
+            SELECT i.id, mu.id
+            FROM ingredient i
+                     JOIN measure_unit mu ON mu.one IN (
+                                                        'грамм', 'килограмм'
+                )
+            WHERE i.name IN (
+                             'Говядина', 'Баранина', 'Свинина', 'Курица'
+                );
+        </sql>
+
+        <!-- ===== Овощи ===== -->
+        <sql>
+            INSERT INTO ingredient_measure_unit (ingredient_id, measure_unit_id)
+            SELECT i.id, mu.id
+            FROM ingredient i
+                     JOIN measure_unit mu ON mu.one IN (
+                                                        'грамм', 'килограмм', 'штука'
+                )
+            WHERE i.name IN (
+                             'Картофель', 'Морковь', 'Лук репчатый', 'Свекла',
+                             'Капуста белокочанная', 'Томат', 'Огурец',
+                             'Баклажан', 'Кабачок', 'Болгарский перец'
+                );
+        </sql>
+
+        <!-- ===== Зелень ===== -->
+        <sql>
+            INSERT INTO ingredient_measure_unit (ingredient_id, measure_unit_id)
+            SELECT i.id, mu.id
+            FROM ingredient i
+                     JOIN measure_unit mu ON mu.one IN (
+                                                        'пучок', 'грамм'
+                )
+            WHERE i.name IN (
+                             'Укроп', 'Петрушка', 'Кинза', 'Зелёный лук'
+                );
+        </sql>
+
+        <!-- ===== Яйца и штучные ===== -->
+        <sql>
+            INSERT INTO ingredient_measure_unit (ingredient_id, measure_unit_id)
+            SELECT i.id, mu.id
+            FROM ingredient i
+                     JOIN measure_unit mu ON mu.one IN (
+                'штука'
+                )
+            WHERE i.name IN (
+                             'Яйцо куриное', 'Лавровый лист'
+                );
+        </sql>
+
+        <!-- ===== Чеснок ===== -->
+        <sql>
+            INSERT INTO ingredient_measure_unit (ingredient_id, measure_unit_id)
+            SELECT i.id, mu.id
+            FROM ingredient i
+                     JOIN measure_unit mu ON mu.one IN (
+                'зубчик'
+                )
+            WHERE i.name = 'Чеснок';
+        </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

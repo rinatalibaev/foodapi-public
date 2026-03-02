@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <include file="2026_1_initial.xml" relativeToChangelogFile="true"/>
+    <include file="2026_2_upsert_measure_units.xml" relativeToChangelogFile="true"/>
+    <include file="2026_3_upsert_ingredients.xml" relativeToChangelogFile="true"/>
+    <include file="2026_4_upsert_ingredient_measure_unit.xml" relativeToChangelogFile="true"/>
+    <include file="2026_5_add_keycloak_id_to_user.xml" relativeToChangelogFile="true"/>
+    <include file="2026_6_add_cascade.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

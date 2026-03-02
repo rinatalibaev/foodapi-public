@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.22.xsd">
+
+    <changeSet id="013-fill-ingredient-table" author="RA">
+        <insert tableName="ingredient">
+            <column name="uuid" valueComputed="gen_random_uuid()"/>
+            <column name="name" value="Вода"/>
+        </insert>
+
+        <!-- ===== Овощи ===== -->
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Картофель"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Морковь"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Лук репчатый"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Чеснок"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Свекла"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Капуста белокочанная"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Капуста квашеная"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Томат"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Огурец"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Баклажан"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Кабачок"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Болгарский перец"/></insert>
+
+        <!-- ===== Зелень ===== -->
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Укроп"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Петрушка"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Кинза"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Зелёный лук"/></insert>
+
+        <!-- ===== Мясо и птица ===== -->
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Говядина"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Баранина"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Свинина"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Курица"/></insert>
+
+        <!-- ===== Молочные продукты ===== -->
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Молоко"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Сметана"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Сливочное масло"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Творог"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Сыр"/></insert>
+
+        <!-- ===== Крупы и мука ===== -->
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Мука пшеничная"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Рис"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Гречка"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Пшено"/></insert>
+
+        <!-- ===== Специи и приправы ===== -->
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Соль"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Чёрный перец"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Лавровый лист"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Хмели-сунели"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Паприка"/></insert>
+
+        <!-- ===== Прочее ===== -->
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Растительное масло"/></insert>
+        <insert tableName="ingredient"><column name="uuid" valueComputed="gen_random_uuid()"/><column name="name" value="Яйцо куриное"/></insert>
+
+    </changeSet>
+
+</databaseChangeLog>
